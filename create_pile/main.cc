@@ -1,4 +1,5 @@
-#include "refcnt.h"
+#include "refcnt/refcnt.h"
+#include <stdio.h>
 
 class RefCountWrapper : public RefCnt
 {
@@ -11,7 +12,7 @@ protected:
 int main (int argc, char *argv[])
 {
     RefCountWrapper * rcw = new RefCountWrapper ();
-
+    printf("ello peeps\n");
     rcw->release();
     return 0;
 }

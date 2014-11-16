@@ -3,20 +3,27 @@ cmake_minimum_required(VERSION 2.8.9)
 set (PROJECT_NAME "create_pile")
 project(${PROJECT_NAME})
 
-set (PROJECT_SOURCES
-    main.cc
-    refcnt.cc
-)
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/bin")
 
-set (PROJECT_HEADERS
-    refcnt.h
-)
+set (INCLUDE_PILE_SOURCES_DIRECTLY OFF)
+if (INCLUDE_PILE_SOURCES_DIRECTLY)
+    include(pile_support)
+    pileInclude (RefCnt)
 
-add_executable(
-    ${PROJECT_NAME}
-    ${PROJECT_SOURCES}
-    ${PROJECT_HEADERS})
+    refCntInit(PILE)
+    add_executable(
+        ${PROJECT_NAME}
+        main.cc
+        ${REFCNT_SOURCES}
+        ${REFCNT_HEADERS})
+else()
+    set (REFCNT_BUILD_MODE SHARED)
 
-target_link_libraries(
-    ${PROJECT_NAME}
-    )
+    add_subdirectory(refcnt)
+    add_executable(
+        ${PROJECT_NAME}
+        main.cc)
+    target_link_libraries(
+        ${PROJECT_NAME}
+        refcnt)
+endif()
