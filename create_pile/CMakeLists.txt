@@ -10,7 +10,7 @@ if (INCLUDE_PILE_SOURCES_DIRECTLY)
     include(pile_support)
     pileInclude (RefCnt)
 
-    refCntInit(PILE)
+    refcntInit(PILE)
     add_executable(
         ${PROJECT_NAME}
         main.cc
